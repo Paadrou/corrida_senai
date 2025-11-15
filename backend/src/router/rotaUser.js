@@ -11,7 +11,7 @@ userRouter.get("/user", async (req, res) => {
 userRouter.get("/user/:id", async (req, res)=>{
     try {
         const { id } = req.params;
-        const [results] = await db.query("SELECT user.name, user.password, user.email, user.year WHERE id_user=?", id)
+        const [results] = await db.query("SELECT user.name, user.password, user.email WHERE id_user=?", id)
         res.send(results)
     } catch (error) {
         console.log(error);
@@ -25,8 +25,8 @@ userRouter.post("/cadastrar", async (req, res) => {
     try {
       const { body } = req;
       const [results] = await db.query(
-        "INSERT INTO user (name, year, email, password) VALUES (?,?,?,?)",
-        [body.name, body.year, body.email, body.password]
+        "INSERT INTO user (name, email, password) VALUES (?,?,?)",
+        [body.name, body.email, body.password]
       );
   
       const [usuarioCriado] = await db.query(
